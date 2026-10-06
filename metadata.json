@@ -1,0 +1,8 @@
+{
+  "name": "Civics Voice",
+  "description": "Civics Voice civic complaint management platform connecting citizens with municipal authorities for tracking, resolution, and community empowerment.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile for citizens and authorities",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["public", "authority"] },
+        "accountStatus": { "type": "string", "enum": ["active", "disabled"] },
+        "department": { "type": "string" },
+        "jurisdiction": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "name", "email", "role", "accountStatus", "createdAt"]
+    },
+    "Complaint": {
+      "title": "Complaint",
+      "description": "Citizen civic complaint record",
+      "type": "object",
+      "properties": {
+        "complaintId": { "type": "string" },
+        "citizenId": { "type": "string" },
+        "citizenName": { "type": "string" },
+        "description": { "type": "string" },
+        "language": { "type": "string" },
+        "category": { "type": "string" },
+        "department": { "type": "string" },
+        "jurisdiction": { "type": "string" },
+        "priority": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+        "status": {
+          "type": "string",
+          "enum": [
+            "SUBMITTED",
+            "UNDER_REVIEW",
+            "ASSIGNED",
+            "WORK_IN_PROGRESS",
+            "RESOLVED",
+            "CITIZEN_VERIFICATION",
+            "CLOSED",
+            "REOPENED"
+          ]
+        },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "address": { "type": "string" },
+        "aiSummary": { "type": "string" },
+        "aiConfidence": { "type": "number" },
+        "aiKeywords": { "type": "array" },
+        "aiProcessingStatus": { "type": "string" },
+        "supportCount": { "type": "integer" },
+        "assignedAuthorityId": { "type": "string" },
+        "assignedAuthorityName": { "type": "string" },
+        "resolutionProofNote": { "type": "string" },
+        "citizenFeedback": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["complaintId", "citizenId", "description", "category", "status", "createdAt"]
+    },
+    "TimelineEvent": {
+      "title": "TimelineEvent",
+      "description": "Lifecycle progress timeline entry for a complaint",
+      "type": "object",
+      "properties": {
+        "updateId": { "type": "string" },
+        "status": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "actorId": { "type": "string" },
+        "actorRole": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["updateId", "status", "title", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile document"
+    },
+    "/complaints/{complaintId}": {
+      "schema": "Complaint",
+      "description": "Civic complaints collection"
+    },
+    "/complaints/{complaintId}/timeline/{updateId}": {
+      "schema": "TimelineEvent",
+      "description": "Complaint status audit trail timeline"
+    }
+  }
+}
